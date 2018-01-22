@@ -1,4 +1,3 @@
-; prove them Ch3 frame 28
 (load "/home/jaredfowler/Development/little-prover-code/j-bob/scheme/j-bob-lang.scm")
 (load "/home/jaredfowler/Development/little-prover-code/j-bob/scheme/j-bob.scm")
 (load "/home/jaredfowler/Development/little-prover-code/j-bob/scheme/little-prover.scm")
@@ -47,8 +46,8 @@
                     't
                     (equal (second-of xs) '?)))
                 nil)))
-(defun predlude+in-first-of-pair ()
-  (j-bob/prove (prelude+first-of-pair)
+(defun prelude+in-first-of-pair ()
+  (j-bob/define (prelude+first-of-pair)
              '(((defun in-pair? (xs)
                   (if (equal (first-of xs) '?)
                     't
@@ -66,3 +65,17 @@
                               (equal (second-of (cons '? (cons b '()))) '?)))
                 (() (equal-same 't))
                 ))))
+ (j-bob/prove (prelude+in-first-of-pair)
+               '(((dethm in-second-of-pair (a)
+                         (equal (in-pair? (pair a '?)) 't))
+                  nil
+                  ((1 1) (pair a '?))
+                  ((1) (in-pair? (cons a (cons '? '()))))
+                  ((1 E 1) (second-of (cons a (cons '? '()))))
+                  ((1 E 1 1) (cdr/cons a (cons '? '())))
+                  ((1 E 1) (car/cons '? '()))
+                  ((1 E) (equal-same '?))
+                  ((1 Q 1) (first-of (cons a (cons '? '()))))
+                  ((1 Q 1 ) (car/cons a (cons '? '())))
+                  ((1) (if-same (equal a '?) 't))
+                  (() (equal-same 't)))))
