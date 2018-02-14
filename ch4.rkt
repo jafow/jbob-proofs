@@ -26,3 +26,13 @@
                 ((Q) (if-nest-A (partial x) 'nil 't))
                 ((E) (if-nest-E (partial x) 't 'nil))
                )))
+
+(defun sub (x y)
+  (if (atom y)
+      (if (equal y '?)
+          x
+          y)
+      (cons (sub x (car y))
+            (sub x (cdr y)))))
+
+      
